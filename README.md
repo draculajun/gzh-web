@@ -1,4 +1,4 @@
-# gzh
+# my-project
 
 ## Project setup
 ```
