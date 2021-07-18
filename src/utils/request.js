@@ -1,41 +1,36 @@
 import axios from "axios"
-import config from "../../config/config.base"
+import config from "@/config.base.js"
 
-let instance = axios.create({
-    timeout: 120000,
-    crossDomain: true,
-    withCredentials: false, //设置cross跨域 并设置访问权限 允许跨域携带cookie信息
+let wxAxios = axios.create({
+    timeout: 30000,
+    // changeOrigin: true,
+    // crossDomain: true,
 })
 
-instance.defaults.baseURL = config.baseURL
+wxAxios.defaults.baseURL = config.wxURL
 
 // 添加请求拦截器
-instance.interceptors.request.use(function (config) {
-    config.headers.appId = "appId";
-    config.headers.token = "token";
-    return config
+wxAxios.interceptors.request.use(function (config) {
+    return config;
 }, function (error) {
     return Promise.reject(error)
 })
 
 // 添加响应拦截器
-instance.interceptors.response.use(function (response) {
+wxAxios.interceptors.response.use(function (response) {
     // 对响应数据做点什么
-    if (response.status == "200") {
-        if (response.data.code == "500") {
-            localStorage.clear()
-            window.location.href = loginUrl
-        }
+    if (response.data.code != "200") {
+        localStorage.clear()
+        window.location.href = config.loginUrl;
     }
     return response.data
 }, function (error) {
-    console.log('--- 401 res error response ---')
     console.log(error.response)
     if (error && error.response && error.response.status == '401') {
         localStorage.clear()
-        window.location.href = loginUrl
+        window.location.href = config.loginUrl;
     }
     return Promise.reject(error)
 })
 
-export default instance
+export default wxAxios

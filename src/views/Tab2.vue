@@ -4,21 +4,26 @@
       <h1>TAB2</h1>
     </van-cell>
     <van-cell center title="获取ACCESSTOKEN">
-      <van-button @click="btnGetAccessTokenHandler">getAccessToken</van-button>
+      <van-button type="primary" @click="btnGetAccessTokenHandler">确定</van-button>
     </van-cell>
   </van-cell-group>
 </template>
 
 <script>
+
 import {Toast} from "vant";
-// import
 
 export default {
   name: "Tab2",
 
   methods: {
     btnGetAccessTokenHandler() {
-      Toast('aaa');
+      this.$wxAxios.get('/accessToken').then(res => {
+        console.log('accessToken:' + res.data);
+        Toast('accessToken:' + res.data);
+      }).catch(err => {
+        console.log(err);
+      })
     },
   }
 }
