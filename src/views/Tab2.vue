@@ -31,13 +31,12 @@ export default {
       });
     },
 
-    btnAddOtherMaterialHandler(e) {
-      console.log(e);
-      let data = {
-        'file': e.file,
-        'type': 'image',
-      }
-      this.$wxAxios.post('/material/page', data).then(res => {
+    btnAddOtherMaterialHandler(obj) {
+      console.log(obj);
+      let formData = new window.FormData();
+      formData.append("file", obj.file);
+      formData.append("type", 'image');
+      this.$wxAxios.post('/material/others', formData, {'Content-Type': 'multipart/form-data'}).then(res => {
         console.log(res);
       })
     },
