@@ -3,11 +3,8 @@ import config from "@/config.base.js"
 
 let wxAxios = axios.create({
     timeout: 30000,
-    // changeOrigin: true,
-    // crossDomain: true,
+    baseURL: `/api`,     //api为代理路径，在vue.config.js中有配置
 })
-
-wxAxios.defaults.baseURL = config.wxURL
 
 // 添加请求拦截器
 wxAxios.interceptors.request.use(function (config) {

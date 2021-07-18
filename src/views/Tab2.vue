@@ -6,6 +6,11 @@
     <van-cell center title="获取ACCESSTOKEN">
       <van-button type="primary" @click="btnGetAccessTokenHandler">确定</van-button>
     </van-cell>
+
+    <van-cell center title="新增永久图片素材">
+      <van-uploader :after-read="btnAddOtherMaterialHandler"/>
+      <!--      <van-button type="primary" @click="btnAddOtherMaterialHandler">确定</van-button>-->
+    </van-cell>
   </van-cell-group>
 </template>
 
@@ -23,6 +28,17 @@ export default {
         Toast('accessToken:' + res.data);
       }).catch(err => {
         console.log(err);
+      });
+    },
+
+    btnAddOtherMaterialHandler(e) {
+      console.log(e);
+      let data = {
+        'file': e.file,
+        'type': 'image',
+      }
+      this.$wxAxios.post('/material/page', data).then(res => {
+        console.log(res);
       })
     },
   }

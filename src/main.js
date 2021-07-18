@@ -4,7 +4,7 @@ import router from './router'
 
 import wxAxios from "@/utils/request";
 
-import {Button, Cell, CellGroup, Grid, GridItem, NavBar, Tabbar, TabbarItem,} from 'vant'
+import {Button, Cell, CellGroup, Grid, GridItem, NavBar, Tabbar, TabbarItem, Uploader} from 'vant'
 
 Vue.config.productionTip = false
 
@@ -19,6 +19,7 @@ Vue.use(Tabbar);
 Vue.use(TabbarItem);
 Vue.use(Grid);
 Vue.use(GridItem);
+Vue.use(Uploader);
 
 Vue.use(router);
 
