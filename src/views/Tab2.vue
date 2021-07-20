@@ -23,7 +23,7 @@
 
         methods: {
             btnGetAccessTokenHandler() {
-                this.$wxAxios.get('/accessToken').then(res => {
+                this.$baseAxios.get('/wxApi/accessToken').then(res => {
                     console.log('accessToken:' + res.data);
                     Toast('accessToken:' + res.data);
                 }).catch(err => {
@@ -36,7 +36,7 @@
                 let formData = new window.FormData();
                 formData.append("file", obj.file);
                 formData.append("type", 'image');
-                this.$wxAxios.post('/material/others', formData, {'Content-Type': 'multipart/form-data'}).then(res => {
+                this.$baseAxios.post('/wxApi/material/others', formData, {'Content-Type': 'multipart/form-data'}).then(res => {
                     console.log(res);
                 })
             },
