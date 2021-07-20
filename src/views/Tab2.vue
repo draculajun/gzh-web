@@ -6,10 +6,12 @@
         <van-cell center title="获取ACCESSTOKEN">
             <van-button type="primary" @click="btnGetAccessTokenHandler">确定</van-button>
         </van-cell>
-
         <van-cell center title="新增永久图片素材">
             <van-uploader :after-read="btnAddOtherMaterialHandler"/>
             <!--      <van-button type="primary" @click="btnAddOtherMaterialHandler">确定</van-button>-->
+        </van-cell>
+        <van-cell center title="获取永久图片素材">
+            <van-button type="primary" @click="btnGetMaterialPageHandler">确定</van-button>
         </van-cell>
     </van-cell-group>
 </template>
@@ -17,17 +19,24 @@
 <script>
 
     import {Toast} from "vant";
+    import materialApi from '../api/material'
+    import baseApi from "../api/api";
 
     export default {
         name: "Tab2",
 
         methods: {
             btnGetAccessTokenHandler() {
-                this.$baseAxios.get('/wxApi/accessToken').then(res => {
-                    console.log('accessToken:' + res.data);
-                    Toast('accessToken:' + res.data);
-                }).catch(err => {
-                    console.log(err);
+                baseApi.getAccessToken().then(res => {
+                    console.log(res);
+                    Toast('accessToken:' + res);
+                });
+            },
+
+            btnGetMaterialPageHandler() {
+                materialApi.page('image', 1, 10).then(res => {
+                    console.log(res);
+                    Toast('material page:' + res);
                 });
             },
 
