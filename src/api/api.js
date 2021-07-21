@@ -1,13 +1,15 @@
-import axios from "../utils/request"
+import baseAxios from "../utils/request";
 
 const baseApi = {};
 
 baseApi.getAccessToken = () => {
     return new Promise((resolve, reject) => {
-        axios.get().then(res => {
-            console.log(res);
+        baseAxios.get('/wxApi/accessToken').then(res => {
+            resolve(res.data);
         }).catch(error => {
             reject(error);
         });
     });
 };
+
+export default baseApi;
