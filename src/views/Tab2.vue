@@ -34,20 +34,21 @@
             },
 
             btnGetMaterialPageHandler() {
-                materialApi.page('image', 1, 10).then(res => {
-                    console.log(res);
-                    Toast('material page:' + res);
-                });
+                // materialApi.page('image', 1, 10).then(res => {
+                //     console.log(res);
+                //     Toast('material page:' + res);
+                // });
+                materialApi.getTemporaryMedia('SgvXqfTRh4zAwqsMwUuRhFuieeRmWkCG6PpuveQ_4TWvkqIMWhtoQMPyIlxAlX2hO');
             },
 
             btnAddOtherMaterialHandler(obj) {
                 console.log(obj);
-                let formData = new window.FormData();
+                let formData = new FormData();
                 formData.append("file", obj.file);
                 formData.append("type", 'image');
-                this.$baseAxios.post('/wxApi/material/others', formData, {'Content-Type': 'multipart/form-data'}).then(res => {
+                this.$baseAxios.postByMultipartForm('/wxApi/material/temporary/media', formData).then(res => {
                     console.log(res);
-                })
+                });
             },
         }
     }

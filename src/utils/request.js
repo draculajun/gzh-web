@@ -20,9 +20,43 @@ baseAxios.get = (url, config) => {
 baseAxios.post = (url, data, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
     configNew['headers']['Content-Type'] = 'application/json; charset=utf-8';
-    console.log(configNew);
     return baseAxios._post(url, JSON.stringify(data), configNew);
 };
+
+baseAxios.postByMultipartForm = (url, data, config) => {
+    let configNew = mergeObj(config, getDefaultAthubConfig());
+    configNew['headers']['Content-Type'] = 'multipart/form-data';
+    return baseAxios._post(url, data, configNew);
+};
+
+baseAxios.download = (url, defaultFilename, config) => {
+    let configNew = mergeObj(config, getDefaultAthubConfig());
+    configNew['responseType'] = 'arraybuffer';
+    axios.get(url, configNew).then(res => {
+        let filename = getFilename(res, defaultFilename);
+        let blob = new Blob([res.data], {type: ''});
+        let objectUrl = URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.href = objectUrl;
+        a.download = filename;
+        document.getElementsByTagName("body")[0].appendChild(a);
+        a.click();
+        a.remove();
+    });
+};
+
+function getFilename(response, defaultFilename) {
+    let filename = defaultFilename || '下载的文件';
+    let contentDisposition = response.headers["content-disposition"];
+    if (contentDisposition != null) {
+        let key = 'filename=';
+        let index = contentDisposition.indexOf(key);
+        if (index !== -1) {
+            filename = decodeURIComponent(contentDisposition.substr(index + key.length)).replaceAll('\"', '');
+        }
+    }
+    return filename;
+}
 
 
 // 添加请求拦截器
