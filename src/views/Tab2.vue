@@ -37,7 +37,7 @@
                 //     console.log(res);
                 //     Toast('material page:' + res);
                 // });
-                materialApi.getTemporaryMedia('SgvXqfTRh4zAwqsMwUuRhFuieeRmWkCG6PpuveQ_4TWvkqIMWhtoQMPyIlxAlX2hO');
+                materialApi.getTemporaryMedia('3p-zhZsJNnAPHwMeFcu_z7H-PvDkf7L6HTF371ANFyFQ2IDf7bsaEZCy1IkYIw1z');
             },
 
             btnAddTemporaryMediaHandler(obj) {

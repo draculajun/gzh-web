@@ -1,4 +1,5 @@
 import axios from "axios"
+import qs from 'qs';
 import config from "@/config.base.js"
 import {mergeObj} from "@/utils/objectUtils.js"
 
@@ -9,11 +10,10 @@ let baseAxios = axios.create({
 
 baseAxios._get = baseAxios.get;
 baseAxios._post = baseAxios.post;
+baseAxios._put = baseAxios.put;
 baseAxios._delete = baseAxios.delete;
 
-//JSON方式通讯
 baseAxios.get = (url, config) => {
-    console.log(config);
     let configNew = mergeObj(config, getDefaultAthubConfig());
     return baseAxios._get(url, configNew);
 };
@@ -25,26 +25,38 @@ baseAxios.delete = function (url, athubConfig) {
 
 baseAxios.post = (url, data, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
-    configNew['headers']['Content-Type'] = 'application/json; charset=utf-8';
+    configNew['headers']['Content-Type'] = MediaType.APPLICATION_JSON_UTF_8;
     return baseAxios._post(url, JSON.stringify(data), configNew);
+};
+
+baseAxios.put = (url, data, config) => {
+    let configNew = mergeObj(config, getDefaultAthubConfig());
+    configNew['headers']['Content-Type'] = MediaType.APPLICATION_JSON_UTF_8;
+    return baseAxios._put(url, JSON.stringify(data), configNew);
+};
+
+baseAxios.postByForm = (url, data, config) => {
+    let configNew = mergeObj(config, getDefaultAthubConfig());
+    configNew['headers']['Content-Type'] = MediaType.APPLICATION_FORM_URLENCODED;
+    return baseAxios._post(url, qs.stringify(data), configNew);
 };
 
 baseAxios.postByMultipartForm = (url, data, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
-    configNew['headers']['Content-Type'] = 'multipart/form-data';
+    configNew['headers']['Content-Type'] = MediaType.MULTIPART_FORM_DATA;
     return baseAxios._post(url, data, configNew);
 };
 
 baseAxios.download = (url, defaultFilename, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
-    configNew['responseType'] = 'arraybuffer';
+    configNew['responseType'] = 'blob';
     axios.get(url, configNew).then(res => {
         let filename = getFilename(res, defaultFilename);
-        let blob = new Blob([res.data], {type: ''});
+        let blob = new Blob([res.data]);
         let objectUrl = URL.createObjectURL(blob);
         let a = document.createElement('a');
         a.href = objectUrl;
-        a.download = filename;
+        a.setAttribute('download', filename);
         document.getElementsByTagName("body")[0].appendChild(a);
         a.click();
         a.remove();
