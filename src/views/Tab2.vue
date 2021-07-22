@@ -6,12 +6,11 @@
         <van-cell center title="获取ACCESSTOKEN">
             <van-button type="primary" @click="btnGetAccessTokenHandler">确定</van-button>
         </van-cell>
-        <van-cell center title="新增永久图片素材">
-            <van-uploader :after-read="btnAddOtherMaterialHandler"/>
-            <!--      <van-button type="primary" @click="btnAddOtherMaterialHandler">确定</van-button>-->
+        <van-cell center title="新增临时图片素材">
+            <van-uploader :after-read="btnAddTemporaryMediaHandler"/>
         </van-cell>
-        <van-cell center title="获取永久图片素材">
-            <van-button type="primary" @click="btnGetMaterialPageHandler">确定</van-button>
+        <van-cell center title="获取临时素材">
+            <van-button type="primary" @click="btnGetTemporaryMediaHandler">确定</van-button>
         </van-cell>
     </van-cell-group>
 </template>
@@ -33,7 +32,7 @@
                 });
             },
 
-            btnGetMaterialPageHandler() {
+            btnGetTemporaryMediaHandler() {
                 // materialApi.page('image', 1, 10).then(res => {
                 //     console.log(res);
                 //     Toast('material page:' + res);
@@ -41,13 +40,12 @@
                 materialApi.getTemporaryMedia('SgvXqfTRh4zAwqsMwUuRhFuieeRmWkCG6PpuveQ_4TWvkqIMWhtoQMPyIlxAlX2hO');
             },
 
-            btnAddOtherMaterialHandler(obj) {
-                console.log(obj);
+            btnAddTemporaryMediaHandler(obj) {
                 let formData = new FormData();
                 formData.append("file", obj.file);
                 formData.append("type", 'image');
                 this.$baseAxios.postByMultipartForm('/wxApi/material/temporary/media', formData).then(res => {
-                    console.log(res);
+                    Toast('上传成功');
                 });
             },
         }

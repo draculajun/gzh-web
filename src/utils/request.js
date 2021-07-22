@@ -9,12 +9,18 @@ let baseAxios = axios.create({
 
 baseAxios._get = baseAxios.get;
 baseAxios._post = baseAxios.post;
+baseAxios._delete = baseAxios.delete;
 
 //JSON方式通讯
 baseAxios.get = (url, config) => {
     console.log(config);
     let configNew = mergeObj(config, getDefaultAthubConfig());
     return baseAxios._get(url, configNew);
+};
+
+baseAxios.delete = function (url, athubConfig) {
+    let configNew = mergeObj(config, getDefaultAthubConfig());
+    return baseAxios._delete(url, configNew);
 };
 
 baseAxios.post = (url, data, config) => {
