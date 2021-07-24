@@ -2,6 +2,7 @@ import axios from "axios"
 import qs from 'qs';
 import config from "@/config.base.js"
 import {mergeObj} from "@/utils/objectUtils.js"
+import {MediaType} from "@/utils/header.js"
 
 let baseAxios = axios.create({
     timeout: 30000,
