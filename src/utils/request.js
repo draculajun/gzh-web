@@ -4,51 +4,51 @@ import config from "@/config.base.js"
 import {mergeObj} from "@/utils/objectUtils.js"
 import {MediaType} from "@/utils/header.js"
 
-let baseAxios = axios.create({
+let BaseAxios = axios.create({
     timeout: 30000,
     baseURL: ``,     //api为代理路径，在vue.config.js中有配置
 });
 
-baseAxios._get = baseAxios.get;
-baseAxios._post = baseAxios.post;
-baseAxios._put = baseAxios.put;
-baseAxios._delete = baseAxios.delete;
+BaseAxios._get = BaseAxios.get;
+BaseAxios._post = BaseAxios.post;
+BaseAxios._put = BaseAxios.put;
+BaseAxios._delete = BaseAxios.delete;
 
-baseAxios.get = (url, config) => {
+BaseAxios.get = (url, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
-    return baseAxios._get(url, configNew);
+    return BaseAxios._get(url, configNew);
 };
 
-baseAxios.delete = function (url, athubConfig) {
+BaseAxios.delete = function (url, config) {
     let configNew = mergeObj(config, getDefaultAthubConfig());
-    return baseAxios._delete(url, configNew);
+    return BaseAxios._delete(url, configNew);
 };
 
-baseAxios.post = (url, data, config) => {
-    let configNew = mergeObj(config, getDefaultAthubConfig());
-    configNew['headers']['Content-Type'] = MediaType.APPLICATION_JSON_UTF_8;
-    return baseAxios._post(url, JSON.stringify(data), configNew);
-};
-
-baseAxios.put = (url, data, config) => {
+BaseAxios.post = (url, data, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
     configNew['headers']['Content-Type'] = MediaType.APPLICATION_JSON_UTF_8;
-    return baseAxios._put(url, JSON.stringify(data), configNew);
+    return BaseAxios._post(url, JSON.stringify(data), configNew);
 };
 
-baseAxios.postByForm = (url, data, config) => {
+BaseAxios.put = (url, data, config) => {
+    let configNew = mergeObj(config, getDefaultAthubConfig());
+    configNew['headers']['Content-Type'] = MediaType.APPLICATION_JSON_UTF_8;
+    return BaseAxios._put(url, JSON.stringify(data), configNew);
+};
+
+BaseAxios.postByForm = (url, data, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
     configNew['headers']['Content-Type'] = MediaType.APPLICATION_FORM_URLENCODED;
-    return baseAxios._post(url, qs.stringify(data), configNew);
+    return BaseAxios._post(url, qs.stringify(data), configNew);
 };
 
-baseAxios.postByMultipartForm = (url, data, config) => {
+BaseAxios.postByMultipartForm = (url, data, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
     configNew['headers']['Content-Type'] = MediaType.MULTIPART_FORM_DATA;
-    return baseAxios._post(url, data, configNew);
+    return BaseAxios._post(url, data, configNew);
 };
 
-baseAxios.download = (url, defaultFilename, config) => {
+BaseAxios.download = (url, defaultFilename, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
     configNew['responseType'] = 'blob';
     axios.get(url, configNew).then(res => {
@@ -79,7 +79,7 @@ function getFilename(response, defaultFilename) {
 
 
 // 添加请求拦截器
-baseAxios.interceptors.request.use(function (config) {
+BaseAxios.interceptors.request.use(function (config) {
     localStorage.setItem('appId', 'WEB');
     localStorage.setItem('token', 'token');
     // 认证信息
@@ -92,7 +92,7 @@ baseAxios.interceptors.request.use(function (config) {
 })
 
 // 添加响应拦截器
-baseAxios.interceptors.response.use(function (response) {
+BaseAxios.interceptors.response.use(function (response) {
     // 对响应数据做点什么
     if (response.data.code != "200") {
         localStorage.clear();
@@ -123,4 +123,4 @@ function autoHeaders(headers, key, value) {
     return headers;
 }
 
-export default baseAxios
+export default BaseAxios

@@ -1,21 +1,7 @@
 import baseAxios from "../utils/request";
+import BaseApi from "@/api/BaseApi";
 
-const materialApi = {};
-
-materialApi.page = (type, offset, count) => {
-    let data = {
-        'type': type,
-        'offset': offset,
-        'count': count,
-    }
-    return new Promise((resolve, reject) => {
-        baseAxios.post('/wxApi/material/page', data).then(res => {
-            resolve(res.data);
-        }).catch(error => {
-            reject(error);
-        });
-    });
-};
+const materialApi = new BaseApi('/wxApi/material/');
 
 materialApi.addTemporaryMedia = (formData) => {
     return new Promise((resolve, reject) => {
@@ -26,6 +12,7 @@ materialApi.addTemporaryMedia = (formData) => {
         });
     });
 };
+
 materialApi.getTemporaryMedia = (mediaId) => {
     baseAxios.download(`/wxApi/material/temporary/media_id/${mediaId}`);
 };
