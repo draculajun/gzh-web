@@ -5,7 +5,11 @@ const accessTokenApi = {};
 accessTokenApi.get = () => {
     return new Promise((resolve, reject) => {
         BaseAxios.get('/wxApi/accessToken').then(res => {
-            resolve(res.data);
+            if (res.data.code == 200) {
+                resolve(res.data.data);
+            } else {
+                reject(res.data.message);
+            }
         }).catch(error => {
             reject(error);
         });

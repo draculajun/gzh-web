@@ -9,43 +9,38 @@ let BaseAxios = axios.create({
     baseURL: ``,     //api为代理路径，在vue.config.js中有配置
 });
 
-BaseAxios._get = BaseAxios.get;
-BaseAxios._post = BaseAxios.post;
-BaseAxios._put = BaseAxios.put;
-BaseAxios._delete = BaseAxios.delete;
-
 BaseAxios.get = (url, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
-    return BaseAxios._get(url, configNew);
+    return axios.get(url, configNew);
 };
 
 BaseAxios.delete = function (url, config) {
     let configNew = mergeObj(config, getDefaultAthubConfig());
-    return BaseAxios._delete(url, configNew);
+    return axios.delete(url, configNew);
 };
 
 BaseAxios.post = (url, data, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
     configNew['headers']['Content-Type'] = MediaType.APPLICATION_JSON_UTF_8;
-    return BaseAxios._post(url, JSON.stringify(data), configNew);
+    return axios.post(url, JSON.stringify(data), configNew);
 };
 
 BaseAxios.put = (url, data, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
     configNew['headers']['Content-Type'] = MediaType.APPLICATION_JSON_UTF_8;
-    return BaseAxios._put(url, JSON.stringify(data), configNew);
+    return axios.put(url, JSON.stringify(data), configNew);
 };
 
 BaseAxios.postByForm = (url, data, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
     configNew['headers']['Content-Type'] = MediaType.APPLICATION_FORM_URLENCODED;
-    return BaseAxios._post(url, qs.stringify(data), configNew);
+    return axios.post(url, qs.stringify(data), configNew);
 };
 
 BaseAxios.postByMultipartForm = (url, data, config) => {
     let configNew = mergeObj(config, getDefaultAthubConfig());
     configNew['headers']['Content-Type'] = MediaType.MULTIPART_FORM_DATA;
-    return BaseAxios._post(url, data, configNew);
+    return axios.post(url, data, configNew);
 };
 
 BaseAxios.download = (url, defaultFilename, config) => {

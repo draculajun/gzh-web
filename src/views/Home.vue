@@ -6,7 +6,7 @@
     <van-tabbar v-model="active" route>
       <van-tabbar-item to="/index" icon="home-o">Tab1</van-tabbar-item>
       <van-tabbar-item to="/Tab2" icon="search">Tab2</van-tabbar-item>
-      <van-tabbar-item icon="friends-o">Tab3</van-tabbar-item>
+      <van-tabbar-item to="/Tab3" icon="friends-o">Tab3</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>

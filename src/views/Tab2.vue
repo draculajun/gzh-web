@@ -64,7 +64,10 @@ export default {
 
     btnGetPersonHandler() {
       personApi.get('3').then(res => {
+        debugger
         console.log(res);
+      }).catch(e=>{
+        console.log(e);
       });
     },
 

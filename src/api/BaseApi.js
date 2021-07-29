@@ -9,7 +9,11 @@ class BaseApi {
     get(id) {
         return new Promise((resolve, reject) => {
             BaseAxios.get(`${this.baseUrl}/${id}`).then(res => {
-                resolve(res.data);
+                if (res.data.code == 200) {
+                    resolve(res.data.data);
+                } else {
+                    reject(res.data.message);
+                }
             }).catch(error => {
                 reject(error);
             });
@@ -19,7 +23,11 @@ class BaseApi {
     insert(params) {
         return new Promise((resolve, reject) => {
             BaseAxios.post(`${this.baseUrl}`, params).then(res => {
-                resolve(res.data);
+                if (res.data.code == 200) {
+                    resolve(res.data.data);
+                } else {
+                    reject(res.data.message);
+                }
             }).catch(error => {
                 reject(error);
             });
@@ -29,7 +37,11 @@ class BaseApi {
     update(id, params) {
         return new Promise((resolve, reject) => {
             BaseAxios.put(`${this.baseUrl}/${id}`, params).then(res => {
-                resolve(res.data);
+                if (res.data.code == 200) {
+                    resolve(res.data.data);
+                } else {
+                    reject(res.data.message);
+                }
             }).catch(error => {
                 reject(error);
             });
@@ -39,7 +51,11 @@ class BaseApi {
     delete(id) {
         return new Promise((resolve, reject) => {
             BaseAxios.delete(`${this.baseUrl}/${id}`).then(res => {
-                resolve(res.data);
+                if (res.data.code == 200) {
+                    resolve(res.data.data);
+                } else {
+                    reject(res.data.message);
+                }
             }).catch(error => {
                 reject(error);
             });
@@ -49,7 +65,11 @@ class BaseApi {
     list(params) {
         return new Promise((resolve, reject) => {
             BaseAxios.post(`${this.baseUrl}/list`, params).then(res => {
-                resolve(res.data);
+                if (res.data.code == 200) {
+                    resolve(res.data.data);
+                } else {
+                    reject(res.data.message);
+                }
             }).catch(error => {
                 reject(error);
             });
@@ -59,7 +79,11 @@ class BaseApi {
     page(params) {
         return new Promise((resolve, reject) => {
             BaseAxios.post(`${this.baseUrl}/page`, params).then(res => {
-                resolve(res.data);
+                if (res.data.code == 200) {
+                    resolve(res.data.data);
+                } else {
+                    reject(res.data.message);
+                }
             }).catch(error => {
                 reject(error);
             });

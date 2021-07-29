@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from '@/views/Home';
 import Tab1 from '@/views/Tab1';
 import Tab2 from '@/views/Tab2';
+import Tab3 from '@/views/Tab3';
 
 Vue.use(Router);
 
@@ -21,6 +22,10 @@ export default new Router({
                 path: '/tab2',
                 name: 'tab2',
                 component: Tab2,
+            }, {
+                path: '/tab3',
+                name: 'tab3',
+                component: Tab3,
             }
         ]
     }],
